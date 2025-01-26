@@ -19,7 +19,7 @@ class Jira
 
         $headers = Headers::withAuthorization(basicAuthentication: $basicAuthentication);
 
-        $client = new GuzzleClient();
+        $client = new GuzzleClient;
 
         $httpTransporter = new HttpTransporter(client: $client, baseUri: $baseUri, headers: $headers);
 

@@ -49,12 +49,6 @@ Run all tests:
 composer test
 ```
 
-Check code quality:
-
-```bash
-composer test:refactor
-```
-
 Check types:
 
 ```bash
