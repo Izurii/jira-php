@@ -16,7 +16,7 @@ class Customers
      *
      * @see https://docs.atlassian.com/jira-servicedesk/REST/5.2.0/#servicedeskapi/customer-createCustomer
      *
-     * @param  non-empty-array<array-key, mixed>  $body
+	 * @param array{fullName:string,email:string} $body
      * @return non-empty-array<array-key, mixed>
      *
      * @throws \Jira\Exceptions\ErrorException
