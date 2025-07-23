@@ -1,5 +1,5 @@
 {
-    "name": "devmoath/jira-php",
+    "name": "izurii/jira-php",
     "description": "Jira PHP is a supercharged PHP API client that allows you to interact with the Jira API and the Service Desk API",
     "keywords": [
         "php",
