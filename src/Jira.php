@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Jira;
+
 use GuzzleHttp\Client as GuzzleClient;
 use Jira\Client;
 use Jira\Transporters\HttpTransporter;
