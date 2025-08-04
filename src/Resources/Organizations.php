@@ -10,16 +10,14 @@ use Jira\Exceptions\TransporterException;
 use Jira\Exceptions\UnserializableResponse;
 use Jira\ValueObjects\Transporter\Payload;
 
-class Customers
+class Organizations
 {
 	use Concerns\Transportable;
 
 	/**
-	 * Create a customer that is not associated with a service project.
+	 * Create a organization.
 	 *
 	 * @see https://docs.atlassian.com/jira-servicedesk/REST/5.2.0/#servicedeskapi/customer-createCustomer
-	 *
-	 * @param array{displayName:string,email:string} $body
 	 *
 	 * @return non-empty-array<array-key, mixed>
 	 *
@@ -28,25 +26,45 @@ class Customers
 	 * @throws UnserializableResponse
 	 * @throws \JsonException
 	 */
-	public function create(array $body): array
+	public function create(string $name): array
 	{
 		$payload = Payload::create(
-			uri: 'servicedeskapi/customer',
+			uri: 'servicedeskapi/organization',
 			method: Method::POST,
-			body: $body,
+			body: [
+				'name' => $name,
+			],
 		);
 
 		// @phpstan-ignore-next-line
 		return $this->transporter->request(payload: $payload);
 	}
 
-	public function findByEmail(string $email): array
+	public function addUser(int $organizationId, string $accountId): null
 	{
 		$payload = Payload::create(
-			uri: 'api/3/user/search',
-			method: Method::GET,
-			query: [
-				'query' => $email,
+			uri: "servicedeskapi/organization/{$organizationId}/user",
+			method: Method::POST,
+			body: [
+				'accountIds' => [$accountId],
+			],
+		);
+
+		// @phpstan-ignore-next-line
+		return $this->transporter->request(payload: $payload);
+	}
+
+	/**
+	 * @return array{organizationsCreated:array,organizationsAdded:array}
+	 */
+	public function addOrganizationToProject(int $organizationId, int $projectId): array
+	{
+		$payload = Payload::create(
+			uri: "servicedesk/1/servicedesk/{$projectId}/organisation/invite",
+			method: Method::PUT,
+			body: [
+				'existingOrganisationIds' => [$organizationId],
+				'newOrganisationNames' => [],
 			],
 		);
 
